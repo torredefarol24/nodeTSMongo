@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
 import ContactSchema from '../../schemas/mongo/contactSchema';
+import ContactModelInterface from '../../interface/contact';
 
-const Contact = mongoose.model(ContactSchema)
-
-export default Contact
+const modelName = "Contact";
+export const Contact = mongoose.model<ContactModelInterface>(modelName, ContactSchema);

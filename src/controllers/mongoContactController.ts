@@ -1,40 +1,32 @@
 import {Request, Response} from 'express';
-import Contact from '../models/mongo/Contact';
+import {Contact} from '../models/mongo/Contact';
 
-
-function getAllContacts(req : Request, res : Response){
+async function getAllContacts(req : Request, res : Response){
+  let contacts = await Contact.find({}).then();
   let returnData = {
     msg : "Get All Contacts", 
     method : `${req.method}`,
-    success : true
+    success : true,
+    data : contacts
   }
   return res.status(200).json(returnData)
 }
 
-function createNewContact(req: Request, res : Response)
+async function createNewContact(req: Request, res : Response)
 {
-  let reqName : String = req.body.name;
-  let reqAge : Number = req.body.age;
+  let reqFirstName : String = req.body.first_name;
+  let reqLastName : String = req.body.last_name;
+  let reqPhone : Number = req.body.phone;
+  let reqCreatedAt : Date = req.body.created_at;
 
-  class ContactInterface{
-    id : Number;
-    name : String;
-    age : Number;
-  }
+  let instanceContact = new Contact();
+  instanceContact.firstName = reqFirstName.trim();
+  instanceContact.lastName = reqLastName.trim();
+  instanceContact.phone = reqPhone;
+  instanceContact.created_at = reqCreatedAt;
 
-  class Contact{
-    constructor(name, age){
-      this.name = name;
-      this.age = age;
-      this.id = 0;
-    }
-    public id : Number;
-    public name : String;
-    public age : Number;
-  }
-
-  let instanceContact:ContactInterface = new Contact(reqName, reqAge)
-
+  await instanceContact.save()
+  
   let returnData = {
     msg : "Create new contact", 
     method : `${req.method}`,
