@@ -1,7 +1,9 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import {Request, Response} from 'express';
-import indexRouter from './routes/indexRoute';
+import IndexRouter from './routes/indexRoutes';
+import MongoContactRouter from './routes/mongoContactRoutes';
+import PGContactRouter from './routes/pgContactRoutes';
 
 class TSNodeApp{
   constructor(){
@@ -18,7 +20,9 @@ class TSNodeApp{
   }
 
   private routeConfig(): void {
-    this.apiApp.use(indexRouter);
+    this.apiApp.use(IndexRouter);
+    this.apiApp.use("/mongo/contacts", MongoContactRouter);
+    this.apiApp.use("/pg/contacts", PGContactRouter)
   }
 
 }

@@ -17,7 +17,6 @@ function showPostData(req : Request, res: Response){
   return res.status(200).json({ data : requestData})
 }
   
-
 const ControllerMethods = {
   indexMethod : sayHello,
   renderIndexPage : renderIndex,
