@@ -1,4 +1,6 @@
 import {Request, Response} from 'express';
+import Contact from '../models/mongo/Contact';
+
 
 function getAllContacts(req : Request, res : Response){
   let returnData = {
