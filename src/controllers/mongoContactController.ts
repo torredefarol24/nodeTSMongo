@@ -2,79 +2,127 @@ import {Request, Response} from 'express';
 import {Contact} from '../models/mongo/Contact';
 
 async function getAllContacts(req : Request, res : Response){
-  let contacts = await Contact.find({}).then();
+  let contactFindOptions : any = {};
+  let contacts = await Contact.find(contactFindOptions).then();
+
   let returnData = {
-    msg : "Get All Contacts", 
+    msg : contacts ? "Contacts Found" : "No Contacts Found", 
     method : `${req.method}`,
     success : true,
-    data : contacts
+    data : contacts ? contacts : null
   }
   return res.status(200).json(returnData)
 }
 
-async function createNewContact(req: Request, res : Response)
-{
+async function createNewContact(req: Request, res : Response){
   let reqFirstName : String = req.body.first_name;
   let reqLastName : String = req.body.last_name;
   let reqPhone : Number = req.body.phone;
   let reqCreatedAt : Date = req.body.created_at;
+
+  if (!reqFirstName || !reqLastName || !reqPhone || !reqCreatedAt){
+    return res.status(404).json({ msg : "Values From request Body missing"});
+  }
 
   let instanceContact = new Contact();
   instanceContact.firstName = reqFirstName.trim();
   instanceContact.lastName = reqLastName.trim();
   instanceContact.phone = reqPhone;
   instanceContact.created_at = reqCreatedAt;
-
-  await instanceContact.save()
   
-  let returnData = {
+  let returnData : any = {
     msg : "Create new contact", 
     method : `${req.method}`,
-    success : true,
-    data : instanceContact
   }
-  return res.status(200).json(returnData);
+
+  let httpStatus : number= 200;
+
+  try {
+    let contact = await instanceContact.save()
+    returnData.data = contact;
+    returnData.success = true;
+  } catch(error){
+    returnData.success = false;
+    returnData.msg = error;
+    httpStatus = 500;
+  }
+  return res.status(httpStatus).json(returnData)
+    
 }
 
-function getContactById(req: Request, res: Response){
-  let contactId : Number = parseInt(req.params.id);
-  let returnData = {
-    msg : "get single contact",
-    id : contactId,
+async function getContactById(req: Request, res: Response){
+  let contactId : String = req.params.id;
+  let returnData : any = {
+    msg : "Contact Found" ,
     method : `${req.method}`,
-    success : true
   }
-  return res.status(200).json(returnData);
+  let httpStatus : number = 200;
+
+  try {
+    let contactFromDB = await Contact.findById(contactId)
+    returnData.data = contactFromDB
+    returnData.success = true;
+  } catch (error){
+    returnData.msg = error;
+    returnData.success = false;
+    httpStatus = 500;
+  }
+  return res.status(httpStatus).json(returnData);
 }
 
-function updateContactById(req : Request, res :Response){
-  let contactId : Number = parseInt(req.params.id);
-  let returnData = {
-    msg : "edit single contact",
-    id : contactId,
-    method : `${req.method}`,
-    success : true,
-    data : {
-      name : req.body.name,
-      age : req.body.age
-    }
+async function updateContactById(req : Request, res :Response){
+  let contactId : String = req.params.id;
+  let contactFindOptions : any= {
+    _id : contactId
+  };
+
+  let returnData : any = {
+    msg : "Edit Contact",
+    method : `${req.method}`
+  };
+
+  let httpStatus : number= 200;
+
+  try{
+    let contactToEdit = await Contact.findByIdAndUpdate(contactFindOptions, req.body)
+    returnData.data = contactToEdit;
+    returnData.success = true;
+  } catch(error){
+    httpStatus = 500;
+    returnData.success = false;
+    returnData.msg = error;
   }
-  return res.status(200).json(returnData);
+  
+  return res.status(httpStatus).json(returnData);
 }
 
-function deleteContactById(req : Request, res : Response){
-  let contactId : Number = parseInt(req.params.id);
-  let returnData = {
-    msg : "Delete single contact",
-    id : contactId,
-    method : `${req.method}`,
-    success : true
+async function deleteContactById(req : Request, res : Response){
+  let contactId : String = req.params.id;
+  let contactFindOptions : any = {
+    _id : contactId
+  };
+
+  let returnData : any = {
+    msg : "Delete Contact",
+    method : `${req.method}`
+  };
+
+  let httpStatus = 200;
+
+  try {
+    await Contact.remove(contactFindOptions)
+    returnData.success = true;
+  } catch(error){
+    returnData.success = false;
+    returnData.msg = error;
+    httpStatus = 500;
   }
-  return res.status(200).json(returnData);
+  
+  return res.status(httpStatus).json(returnData);
 }
 
 
-const ControllerMethods = {
+const ControllerMethods : any = {
   showAllContacts : getAllContacts,
   createContact : createNewContact,
   getSingleContact : getContactById,
