@@ -29,7 +29,15 @@ class TSNodeApp{
   }
 
   private mongoDBSetup() : void{
-    mongoose.connect(this.mongoURL, {useNewUrlParser: true})
+    mongoose.connect(this.mongoURL, {useNewUrlParser: true}, 
+      (err) => {
+        if (err){
+          console.error("DB Error" , err);
+        } else {
+          console.log("Connected to MongoDB")
+        }
+      }
+    )
   }
 
 }

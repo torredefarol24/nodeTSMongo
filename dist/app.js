@@ -25,7 +25,14 @@ class TSNodeApp {
         this.apiApp.use("/pg/contacts", pgContactRoutes_1.default);
     }
     mongoDBSetup() {
-        mongoose.connect(this.mongoURL, { useNewUrlParser: true });
+        mongoose.connect(this.mongoURL, { useNewUrlParser: true }, (err) => {
+            if (err) {
+                console.error("DB Error", err);
+            }
+            else {
+                console.log("Connected to MongoDB");
+            }
+        });
     }
 }
 exports.default = new TSNodeApp().apiApp;

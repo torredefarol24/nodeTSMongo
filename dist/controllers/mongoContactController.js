@@ -24,16 +24,16 @@ function getAllContacts(req, res) {
 }
 function createNewContact(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        let reqFirstName = req.body.first_name;
-        let reqLastName = req.body.last_name;
+        let reqFirstName = req.body.firstName.trim();
+        let reqLastName = req.body.lastName.trim();
         let reqPhone = req.body.phone;
-        let reqCreatedAt = req.body.created_at;
+        let reqCreatedAt = req.body.created_at.trim();
         if (!reqFirstName || !reqLastName || !reqPhone || !reqCreatedAt) {
             return res.status(404).json({ msg: "Values From request Body missing" });
         }
         let instanceContact = new Contact_1.Contact();
-        instanceContact.firstName = reqFirstName.trim();
-        instanceContact.lastName = reqLastName.trim();
+        instanceContact.firstName = reqFirstName;
+        instanceContact.lastName = reqLastName;
         instanceContact.phone = reqPhone;
         instanceContact.created_at = reqCreatedAt;
         let returnData = {
@@ -87,8 +87,9 @@ function updateContactById(req, res) {
         };
         let httpStatus = 200;
         try {
-            let contactToEdit = yield Contact_1.Contact.findByIdAndUpdate(contactFindOptions, req.body);
-            returnData.data = contactToEdit;
+            let contactToEdit = yield Contact_1.Contact.findOneAndUpdate(contactFindOptions, req.body);
+            let editedContact = yield Contact_1.Contact.findById(contactFindOptions);
+            returnData.data = editedContact;
             returnData.success = true;
         }
         catch (error) {

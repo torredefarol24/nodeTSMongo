@@ -15,18 +15,18 @@ async function getAllContacts(req : Request, res : Response){
 }
 
 async function createNewContact(req: Request, res : Response){
-  let reqFirstName : String = req.body.first_name;
-  let reqLastName : String = req.body.last_name;
+  let reqFirstName : String = req.body.firstName.trim();
+  let reqLastName : String = req.body.lastName.trim();
   let reqPhone : Number = req.body.phone;
-  let reqCreatedAt : Date = req.body.created_at;
+  let reqCreatedAt : Date = req.body.created_at.trim();
 
   if (!reqFirstName || !reqLastName || !reqPhone || !reqCreatedAt){
     return res.status(404).json({ msg : "Values From request Body missing"});
   }
 
   let instanceContact = new Contact();
-  instanceContact.firstName = reqFirstName.trim();
-  instanceContact.lastName = reqLastName.trim();
+  instanceContact.firstName = reqFirstName;
+  instanceContact.lastName = reqLastName;
   instanceContact.phone = reqPhone;
   instanceContact.created_at = reqCreatedAt;
   
@@ -84,8 +84,9 @@ async function updateContactById(req : Request, res :Response){
   let httpStatus : number= 200;
 
   try{
-    let contactToEdit = await Contact.findByIdAndUpdate(contactFindOptions, req.body)
-    returnData.data = contactToEdit;
+    let contactToEdit = await Contact.findOneAndUpdate(contactFindOptions, req.body);
+    let editedContact = await Contact.findById(contactFindOptions);
+    returnData.data = editedContact;
     returnData.success = true;
   } catch(error){
     httpStatus = 500;
@@ -106,7 +107,6 @@ async function deleteContactById(req : Request, res : Response){
     msg : "Delete Contact",
     method : `${req.method}`
   };
-
   let httpStatus = 200;
 
   try {
