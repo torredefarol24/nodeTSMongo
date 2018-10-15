@@ -1,8 +1,15 @@
-import apiApp from './app';
-const backendPort = 4000;
+import apiApp from './apiApp';
+import hostApp from './hostApp';
+const hostPort = 3000;
+const apiPort = 4000;
 
-let logServer = function(){
-  console.log(`Server Listening on ${backendPort}`);
+let logServerAPIApp = function(){
+  console.log(`API Listening on ${apiPort}`);
 }
 
-apiApp.listen(backendPort, logServer);
+let logServerHostApp = function(){
+  console.log(`Host Listening on ${hostPort}`);
+}
+
+apiApp.listen(apiPort, logServerAPIApp);
+hostApp.listen(hostPort, logServerHostApp);

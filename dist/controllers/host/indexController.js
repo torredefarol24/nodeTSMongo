@@ -8,18 +8,11 @@ function indexPage(req, res) {
         hostName: req.hostname,
         message: "Wow Typescript & Express",
     };
-    // return res.status(200).json(context);
-    // return res.sendFile(pathName)
-    res.render("index/index.pug");
-}
-function sendData(req, res) {
-    let requestData = req.body;
-    return res.status(200).json({ data: requestData });
+    res.render("index/index.pug", context);
 }
 const ControllerMethods = {
     indexMethod: welcome,
     renderIndexPage: indexPage,
-    handlePost: sendData,
 };
 exports.default = ControllerMethods;
 //# sourceMappingURL=indexController.js.map
