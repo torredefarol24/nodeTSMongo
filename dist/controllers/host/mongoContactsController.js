@@ -8,11 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Contact_1 = require("../models/mongo/Contact");
+const Contact_1 = require("../../models/mongo/Contact");
 function getAllContacts(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         let contactFindOptions = {};
-        let contacts = yield Contact_1.Contact.find(contactFindOptions).then();
+        let contacts = yield Contact_1.Contact.find(contactFindOptions);
         let jsonResp = {
             msg: contacts ? "Contacts Found" : "No Contacts Found",
             method: `${req.method}`,
@@ -131,4 +131,4 @@ const ControllerMethods = {
     deleteContact: deleteContactById
 };
 exports.default = ControllerMethods;
-//# sourceMappingURL=mongoContactController.js.map
+//# sourceMappingURL=mongoContactsController.js.map

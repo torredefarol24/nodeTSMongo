@@ -8,18 +8,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Contact_1 = require("../models/mongo/Contact");
+const Contact_1 = require("../../models/mongo/Contact");
 function getAllContacts(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         let contactFindOptions = {};
-        let contacts = yield Contact_1.Contact.find(contactFindOptions).then();
-        let jsonResp = {
-            msg: contacts ? "Contacts Found" : "No Contacts Found",
-            method: `${req.method}`,
-            success: true,
-            data: contacts ? contacts : null
+        let contextData = {
+            msg: "No Contacts Found",
+            contacts: null
         };
-        return res.status(200).json(jsonResp);
+        try {
+            let contacts = yield Contact_1.Contact.find(contactFindOptions);
+            contextData.contacts = contacts;
+        }
+        catch (error) {
+            contextData.msg = error;
+        }
+        return res.render("contacts/contacts.pug", contextData);
     });
 }
 function createNewContact(req, res) {
@@ -28,13 +32,17 @@ function createNewContact(req, res) {
         let reqLastName = req.body.lastName.trim();
         let reqPhone = req.body.phone;
         let reqCreatedAt = req.body.created_at.trim();
-        if (!reqFirstName || !reqLastName || !reqPhone || !reqCreatedAt) {
+        let reqAddress = req.body.address.trim();
+        let reqContactType = req.body.contactType.trim();
+        if (!reqFirstName || !reqLastName || !reqPhone || !reqAddress) {
             return res.status(404).json({ msg: "Values From request Body missing" });
         }
         let instanceContact = new Contact_1.Contact();
         instanceContact.firstName = reqFirstName;
         instanceContact.lastName = reqLastName;
         instanceContact.phone = reqPhone;
+        instanceContact.address = reqAddress;
+        instanceContact.contactType = reqContactType;
         instanceContact.created_at = reqCreatedAt;
         let jsonResp = {
             msg: "Create new contact",
@@ -131,4 +139,4 @@ const ControllerMethods = {
     deleteContact: deleteContactById
 };
 exports.default = ControllerMethods;
-//# sourceMappingURL=mongoContactController.js.map
+//# sourceMappingURL=mongoContact.js.map

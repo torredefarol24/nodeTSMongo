@@ -1,12 +1,12 @@
 import {Request, Response} from 'express';
 
 function getAllContacts(req : Request, res : Response){
-  let returnData = {
+  let jsonResp = {
     msg : "Get All Contacts", 
     method : `${req.method}`,
     success : true
   }
-  return res.status(200).json(returnData)
+  return res.status(200).json(jsonResp)
 }
 
 function createNewContact(req: Request, res : Response)
@@ -33,29 +33,29 @@ function createNewContact(req: Request, res : Response)
 
   let instanceContact:ContactInterface = new Contact(reqName, reqAge)
 
-  let returnData = {
+  let jsonResp = {
     msg : "Create new contact", 
     method : `${req.method}`,
     success : true,
     data : instanceContact
   }
-  return res.status(200).json(returnData);
+  return res.status(200).json(jsonResp);
 }
 
 function getContactById(req: Request, res: Response){
   let contactId : Number = parseInt(req.params.id);
-  let returnData = {
+  let jsonResp = {
     msg : "get single contact",
     id : contactId,
     method : `${req.method}`,
     success : true
   }
-  return res.status(200).json(returnData);
+  return res.status(200).json(jsonResp);
 }
 
 function updateContactById(req : Request, res :Response){
   let contactId : Number = parseInt(req.params.id);
-  let returnData = {
+  let jsonResp = {
     msg : "edit single contact",
     id : contactId,
     method : `${req.method}`,
@@ -65,18 +65,18 @@ function updateContactById(req : Request, res :Response){
       age : req.body.age
     }
   }
-  return res.status(200).json(returnData);
+  return res.status(200).json(jsonResp);
 }
 
 function deleteContactById(req : Request, res : Response){
   let contactId : Number = parseInt(req.params.id);
-  let returnData = {
+  let jsonResp = {
     msg : "Delete single contact",
     id : contactId,
     method : `${req.method}`,
     success : true
   }
-  return res.status(200).json(returnData);
+  return res.status(200).json(jsonResp);
 }
 
 

@@ -1,6 +1,7 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import IndexRouter from './routes/host/indexRoutes';
+import IndexRouter from './routes/host';
+import MongoContactsRouter from './routes/host/mongoContact';
 import AppKeys from './config/keys';
 import * as mongoose from 'mongoose';
 
@@ -9,7 +10,7 @@ class TSNodeHostApp{
     this.hostApp = express();
     this.bodyParserConfig();
     this.routeConfig();
-    // this.mongoDBSetup();
+    this.mongoDBSetup();
     this.staticFilesSetup();
   }
   
@@ -23,6 +24,7 @@ class TSNodeHostApp{
 
   private routeConfig(): void {
     this.hostApp.use(IndexRouter);
+    this.hostApp.use("/contacts", MongoContactsRouter);
   }
 
   private mongoDBSetup() : void{

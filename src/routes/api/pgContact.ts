@@ -1,5 +1,5 @@
 import {Router, Request, Response} from 'express';
-import PGContactController from '../../controllers/api/pgContactController'
+import PGContactController from '../../controllers/api/pgContact'
 
 let pgContactRouter: Router = Router();
 

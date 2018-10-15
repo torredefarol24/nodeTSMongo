@@ -11,11 +11,16 @@ const contactSchemaOptions = {
         required: "Provide Last Name"
     },
     phone: {
-        type: Number
+        type: String,
+        required: "Provide Phone"
     },
     contactType: {
         type: String,
         default: "Other"
+    },
+    address: {
+        type: String,
+        required: "Provide Address"
     },
     created_at: {
         type: Date,
@@ -24,4 +29,4 @@ const contactSchemaOptions = {
 };
 const ContactSchema = new mongoose.Schema(contactSchemaOptions);
 exports.default = ContactSchema;
-//# sourceMappingURL=contactSchema.js.map
+//# sourceMappingURL=contact.js.map

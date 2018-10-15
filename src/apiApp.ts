@@ -1,8 +1,7 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import IndexRouter from './routes/host/indexRoutes';
-import MongoContactRouter from './routes/api/mongoContactRoutes';
-import PGContactRouter from './routes/api/pgContactRoutes';
+import MongoContactRouter from './routes/api/mongoContact';
+import PGContactRouter from './routes/api/pgContact';
 import AppKeys from './config/keys';
 import * as mongoose from 'mongoose';
 
@@ -11,7 +10,7 @@ class TSNodeApiApp{
     this.apiApp = express();
     this.bodyParserConfig();
     this.routeConfig();
-    // this.mongoDBSetup();
+    this.mongoDBSetup();
   }
   
   public apiApp : express.Application;

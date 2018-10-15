@@ -9,4 +9,4 @@ mongoContactRouter.get("/:id", mongoContact_1.default.getSingleContact);
 mongoContactRouter.patch("/:id", mongoContact_1.default.editContact);
 mongoContactRouter.delete("/:id", mongoContact_1.default.deleteContact);
 exports.default = mongoContactRouter;
-//# sourceMappingURL=mongoContactRoutes.js.map
+//# sourceMappingURL=mongoContact.js.map

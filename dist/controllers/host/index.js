@@ -19,4 +19,4 @@ const ControllerMethods = {
     renderAboutPage: aboutPage
 };
 exports.default = ControllerMethods;
-//# sourceMappingURL=indexController.js.map
+//# sourceMappingURL=index.js.map

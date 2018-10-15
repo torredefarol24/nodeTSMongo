@@ -1,5 +1,5 @@
 import {Router, Request, Response} from 'express';
-import MongoContactController from '../../controllers/api/mongoContactController'
+import MongoContactController from '../../controllers/api/mongoContact'
 
 let mongoContactRouter: Router = Router();
 

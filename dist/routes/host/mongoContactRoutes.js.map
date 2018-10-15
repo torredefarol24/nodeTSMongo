@@ -1,0 +1,1 @@
+{"version":3,"file":"mongoContactRoutes.js","sourceRoot":"","sources":["../../../src/routes/host/mongoContactRoutes.ts"],"names":[],"mappings":";;AAAA,qCAA+B;AAC/B,sEAAwE;AAExE,IAAI,cAAc,GAAW,gBAAM,EAAE,CAAC;AAEtC,cAAc,CAAC,GAAG,CAAC,GAAG,EAAE,sBAAuB,CAAC,eAAe,CAAC,CAAC;AACjE,oEAAoE;AAEpE,kBAAe,cAAc,CAAC"}

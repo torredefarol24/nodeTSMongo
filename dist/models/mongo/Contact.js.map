@@ -1,1 +1,1 @@
-{"version":3,"file":"Contact.js","sourceRoot":"","sources":["../../../src/models/mongo/Contact.ts"],"names":[],"mappings":";;AAAA,qCAAqC;AACrC,qEAA8D;AAG9D,MAAM,SAAS,GAAG,SAAS,CAAC;AACf,QAAA,OAAO,GAAG,QAAQ,CAAC,KAAK,CAAwB,SAAS,EAAE,uBAAa,CAAC,CAAC"}
+{"version":3,"file":"Contact.js","sourceRoot":"","sources":["../../../src/models/mongo/Contact.ts"],"names":[],"mappings":";;AAAA,qCAAqC;AACrC,yDAAwD;AAGxD,MAAM,SAAS,GAAG,SAAS,CAAC;AACf,QAAA,OAAO,GAAG,QAAQ,CAAC,KAAK,CAAwB,SAAS,EAAE,iBAAa,CAAC,CAAC"}

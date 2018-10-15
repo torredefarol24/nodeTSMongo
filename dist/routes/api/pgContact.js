@@ -9,4 +9,4 @@ pgContactRouter.get("/:id", pgContact_1.default.getSingleContact);
 pgContactRouter.patch("/:id", pgContact_1.default.editContact);
 pgContactRouter.delete("/:id", pgContact_1.default.deleteContact);
 exports.default = pgContactRouter;
-//# sourceMappingURL=pgContactRoutes.js.map
+//# sourceMappingURL=pgContact.js.map

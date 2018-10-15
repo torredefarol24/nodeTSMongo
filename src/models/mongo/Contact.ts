@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose';
-import ContactSchema from '../../schemas/mongo/contactSchema';
+import ContactSchema from '../../schemas/mongo/contact';
 import ContactModelInterface from '../../interface/contact';
 
 const modelName = "Contact";

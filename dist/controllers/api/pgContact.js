@@ -71,4 +71,4 @@ const ControllerMethods = {
     deleteContact: deleteContactById
 };
 exports.default = ControllerMethods;
-//# sourceMappingURL=pgContactController.js.map
+//# sourceMappingURL=pgContact.js.map

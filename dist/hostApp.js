@@ -2,7 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const bodyParser = require("body-parser");
-const indexRoutes_1 = require("./routes/host/indexRoutes");
+const host_1 = require("./routes/host");
+const mongoContact_1 = require("./routes/host/mongoContact");
 const keys_1 = require("./config/keys");
 const mongoose = require("mongoose");
 class TSNodeHostApp {
@@ -11,7 +12,7 @@ class TSNodeHostApp {
         this.hostApp = express();
         this.bodyParserConfig();
         this.routeConfig();
-        // this.mongoDBSetup();
+        this.mongoDBSetup();
         this.staticFilesSetup();
     }
     bodyParserConfig() {
@@ -19,7 +20,8 @@ class TSNodeHostApp {
         this.hostApp.use(bodyParser.urlencoded({ extended: false }));
     }
     routeConfig() {
-        this.hostApp.use(indexRoutes_1.default);
+        this.hostApp.use(host_1.default);
+        this.hostApp.use("/contacts", mongoContact_1.default);
     }
     mongoDBSetup() {
         mongoose.connect(this.mongoURL, { useNewUrlParser: true }, (err) => {

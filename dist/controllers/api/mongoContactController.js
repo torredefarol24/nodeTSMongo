@@ -12,14 +12,18 @@ const Contact_1 = require("../../models/mongo/Contact");
 function getAllContacts(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         let contactFindOptions = {};
-        let contacts = yield Contact_1.Contact.find(contactFindOptions).then();
-        let returnData = {
-            msg: contacts ? "Contacts Found" : "No Contacts Found",
-            method: `${req.method}`,
-            success: true,
-            data: contacts ? contacts : null
+        let contextData = {
+            msg: "No Contacts Found",
+            contacts: null
         };
-        return res.status(200).json(returnData);
+        try {
+            let contacts = yield Contact_1.Contact.find(contactFindOptions);
+            contextData.contacts = contacts;
+        }
+        catch (error) {
+            contextData.msg = error;
+        }
+        return res.render("contacts/contacts", contextData);
     });
 }
 function createNewContact(req, res) {
@@ -36,43 +40,43 @@ function createNewContact(req, res) {
         instanceContact.lastName = reqLastName;
         instanceContact.phone = reqPhone;
         instanceContact.created_at = reqCreatedAt;
-        let returnData = {
+        let jsonResp = {
             msg: "Create new contact",
             method: `${req.method}`,
         };
         let httpStatus = 200;
         try {
             let contact = yield instanceContact.save();
-            returnData.data = contact;
-            returnData.success = true;
+            jsonResp.data = contact;
+            jsonResp.success = true;
         }
         catch (error) {
-            returnData.success = false;
-            returnData.msg = error;
+            jsonResp.success = false;
+            jsonResp.msg = error;
             httpStatus = 500;
         }
-        return res.status(httpStatus).json(returnData);
+        return res.status(httpStatus).json(jsonResp);
     });
 }
 function getContactById(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         let contactId = req.params.id;
-        let returnData = {
+        let jsonResp = {
             msg: "Contact Found",
             method: `${req.method}`,
         };
         let httpStatus = 200;
         try {
             let contactFromDB = yield Contact_1.Contact.findById(contactId);
-            returnData.data = contactFromDB;
-            returnData.success = true;
+            jsonResp.data = contactFromDB;
+            jsonResp.success = true;
         }
         catch (error) {
-            returnData.msg = error;
-            returnData.success = false;
+            jsonResp.msg = error;
+            jsonResp.success = false;
             httpStatus = 500;
         }
-        return res.status(httpStatus).json(returnData);
+        return res.status(httpStatus).json(jsonResp);
     });
 }
 function updateContactById(req, res) {
@@ -81,7 +85,7 @@ function updateContactById(req, res) {
         let contactFindOptions = {
             _id: contactId
         };
-        let returnData = {
+        let jsonResp = {
             msg: "Edit Contact",
             method: `${req.method}`
         };
@@ -89,15 +93,15 @@ function updateContactById(req, res) {
         try {
             let contactToEdit = yield Contact_1.Contact.findOneAndUpdate(contactFindOptions, req.body);
             let editedContact = yield Contact_1.Contact.findById(contactFindOptions);
-            returnData.data = editedContact;
-            returnData.success = true;
+            jsonResp.data = editedContact;
+            jsonResp.success = true;
         }
         catch (error) {
             httpStatus = 500;
-            returnData.success = false;
-            returnData.msg = error;
+            jsonResp.success = false;
+            jsonResp.msg = error;
         }
-        return res.status(httpStatus).json(returnData);
+        return res.status(httpStatus).json(jsonResp);
     });
 }
 function deleteContactById(req, res) {
@@ -106,21 +110,21 @@ function deleteContactById(req, res) {
         let contactFindOptions = {
             _id: contactId
         };
-        let returnData = {
+        let jsonResp = {
             msg: "Delete Contact",
             method: `${req.method}`
         };
         let httpStatus = 200;
         try {
             yield Contact_1.Contact.remove(contactFindOptions);
-            returnData.success = true;
+            jsonResp.success = true;
         }
         catch (error) {
-            returnData.success = false;
-            returnData.msg = error;
+            jsonResp.success = false;
+            jsonResp.msg = error;
             httpStatus = 500;
         }
-        return res.status(httpStatus).json(returnData);
+        return res.status(httpStatus).json(jsonResp);
     });
 }
 const ControllerMethods = {

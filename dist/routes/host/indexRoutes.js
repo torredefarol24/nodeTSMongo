@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const indexController_1 = require("../../controllers/host/indexController");
+const host_1 = require("../../controllers/host");
 let IndexRouter = express_1.Router();
-IndexRouter.get("/", indexController_1.default.indexMethod);
-IndexRouter.get("/index", indexController_1.default.renderIndexPage);
+IndexRouter.get("/", host_1.default.renderIndexPage);
+IndexRouter.get("/about", host_1.default.renderAboutPage);
 exports.default = IndexRouter;
 //# sourceMappingURL=indexRoutes.js.map
