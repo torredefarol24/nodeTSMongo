@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const bodyParser = require("body-parser");
 const host_1 = require("./routes/host");
-const mongoContact_1 = require("./routes/host/mongoContact");
+const contact_1 = require("./routes/host/contact");
 const keys_1 = require("./config/keys");
 const mongoose = require("mongoose");
 class TSNodeHostApp {
@@ -21,7 +21,7 @@ class TSNodeHostApp {
     }
     routeConfig() {
         this.hostApp.use(host_1.default);
-        this.hostApp.use("/contacts", mongoContact_1.default);
+        this.hostApp.use("/contacts", contact_1.default);
     }
     mongoDBSetup() {
         mongoose.connect(this.mongoURL, { useNewUrlParser: true }, (err) => {
@@ -29,7 +29,7 @@ class TSNodeHostApp {
                 console.error("DB Error", err);
             }
             else {
-                console.log("Connected to MongoDB");
+                console.log("Connected to MongoDB - Host App");
             }
         });
     }

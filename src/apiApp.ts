@@ -1,7 +1,6 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import MongoContactRouter from './routes/api/mongoContact';
-import PGContactRouter from './routes/api/pgContact';
+import MongoContactRouter from './routes/api/contact';
 import AppKeys from './config/keys';
 import * as mongoose from 'mongoose';
 
@@ -22,8 +21,7 @@ class TSNodeApiApp{
   }
 
   private routeConfig(): void {
-    this.apiApp.use("/api/mongo/contacts", MongoContactRouter);
-    this.apiApp.use("/api/pg/contacts", PGContactRouter)
+    this.apiApp.use("/api/contacts", MongoContactRouter);
   }
 
   private mongoDBSetup() : void{
@@ -32,7 +30,7 @@ class TSNodeApiApp{
         if (err){
           console.error("DB Error" , err);
         } else {
-          console.log("Connected to MongoDB")
+          console.log("Connected to MongoDB - API")
         }
       }
     )

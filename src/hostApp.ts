@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import IndexRouter from './routes/host';
-import MongoContactsRouter from './routes/host/mongoContact';
+import ContactsRouter from './routes/host/contact';
 import AppKeys from './config/keys';
 import * as mongoose from 'mongoose';
 
@@ -24,7 +24,7 @@ class TSNodeHostApp{
 
   private routeConfig(): void {
     this.hostApp.use(IndexRouter);
-    this.hostApp.use("/contacts", MongoContactsRouter);
+    this.hostApp.use("/contacts", ContactsRouter);
   }
 
   private mongoDBSetup() : void{
@@ -33,7 +33,7 @@ class TSNodeHostApp{
         if (err){
           console.error("DB Error" , err);
         } else {
-          console.log("Connected to MongoDB")
+          console.log("Connected to MongoDB - Host App")
         }
       }
     )
