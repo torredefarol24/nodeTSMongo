@@ -19,6 +19,7 @@ function getAllContacts(req, res) {
         try {
             let contacts = yield Contact_1.Contact.find(contactFindOptions);
             contextData.contacts = contacts;
+            contextData.msg = "Contacts From DB";
         }
         catch (error) {
             contextData.msg = error;
@@ -31,7 +32,7 @@ function createNewContact(req, res) {
         let reqFirstName = req.body.firstName.trim();
         let reqLastName = req.body.lastName.trim();
         let reqPhone = req.body.phone;
-        let reqCreatedAt = req.body.created_at.trim();
+        let reqCreatedAt = new Date();
         let reqAddress = req.body.address.trim();
         let reqContactType = req.body.contactType.trim();
         if (!reqFirstName || !reqLastName || !reqPhone || !reqAddress) {
@@ -44,43 +45,31 @@ function createNewContact(req, res) {
         instanceContact.address = reqAddress;
         instanceContact.contactType = reqContactType;
         instanceContact.created_at = reqCreatedAt;
-        let jsonResp = {
-            msg: "Create new contact",
-            method: `${req.method}`,
-        };
-        let httpStatus = 200;
         try {
-            let contact = yield instanceContact.save();
-            jsonResp.data = contact;
-            jsonResp.success = true;
+            yield instanceContact.save();
+            return res.redirect("/contacts");
         }
         catch (error) {
-            jsonResp.success = false;
-            jsonResp.msg = error;
-            httpStatus = 500;
+            return res.redirect("/contacts");
         }
-        return res.status(httpStatus).json(jsonResp);
     });
 }
 function getContactById(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         let contactId = req.params.id;
-        let jsonResp = {
-            msg: "Contact Found",
-            method: `${req.method}`,
+        let contextData = {
+            msg: "No Contact Found",
+            contact: null
         };
-        let httpStatus = 200;
         try {
             let contactFromDB = yield Contact_1.Contact.findById(contactId);
-            jsonResp.data = contactFromDB;
-            jsonResp.success = true;
+            contextData.data = contactFromDB;
+            contextData.msg = "Contact Found";
         }
         catch (error) {
-            jsonResp.msg = error;
-            jsonResp.success = false;
-            httpStatus = 500;
+            contextData.msg = error;
         }
-        return res.status(httpStatus).json(jsonResp);
+        return res.render("contacts/contact-details.pug", contextData);
     });
 }
 function updateContactById(req, res) {
@@ -89,23 +78,13 @@ function updateContactById(req, res) {
         let contactFindOptions = {
             _id: contactId
         };
-        let jsonResp = {
-            msg: "Edit Contact",
-            method: `${req.method}`
-        };
-        let httpStatus = 200;
         try {
-            let contactToEdit = yield Contact_1.Contact.findOneAndUpdate(contactFindOptions, req.body);
-            let editedContact = yield Contact_1.Contact.findById(contactFindOptions);
-            jsonResp.data = editedContact;
-            jsonResp.success = true;
+            yield Contact_1.Contact.findOneAndUpdate(contactFindOptions, req.body);
+            return res.redirect("/contacts");
         }
         catch (error) {
-            httpStatus = 500;
-            jsonResp.success = false;
-            jsonResp.msg = error;
+            return res.redirect("/contacts");
         }
-        return res.status(httpStatus).json(jsonResp);
     });
 }
 function deleteContactById(req, res) {
@@ -114,21 +93,18 @@ function deleteContactById(req, res) {
         let contactFindOptions = {
             _id: contactId
         };
-        let jsonResp = {
-            msg: "Delete Contact",
-            method: `${req.method}`
-        };
-        let httpStatus = 200;
         try {
             yield Contact_1.Contact.remove(contactFindOptions);
-            jsonResp.success = true;
+            return res.redirect("/contacts");
         }
         catch (error) {
-            jsonResp.success = false;
-            jsonResp.msg = error;
-            httpStatus = 500;
+            return res.redirect("/contacts");
         }
-        return res.status(httpStatus).json(jsonResp);
+    });
+}
+function renderAddContactForm(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return res.render("contacts/add-contact.pug");
     });
 }
 const ControllerMethods = {
@@ -136,7 +112,8 @@ const ControllerMethods = {
     createContact: createNewContact,
     getSingleContact: getContactById,
     editContact: updateContactById,
-    deleteContact: deleteContactById
+    deleteContact: deleteContactById,
+    showAddContactPage: renderAddContactForm
 };
 exports.default = ControllerMethods;
 //# sourceMappingURL=contact.js.map

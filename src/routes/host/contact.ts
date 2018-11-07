@@ -1,9 +1,13 @@
 import {Router} from 'express';
-import MongoContactsController from'../../controllers/host/contact'
+import ContactsController from'../../controllers/host/contact'
 
 let ContactsRouter: Router = Router();
 
-ContactsRouter.get("/", MongoContactsController.showAllContacts);
-// ContactsRouter.get("/", MongoContactsController.renderAboutPage);
+ContactsRouter.get("/", ContactsController.showAllContacts);
+ContactsRouter.get("/add", ContactsController.showAddContactPage);
+ContactsRouter.get("/:id", ContactsController.getSingleContact);
+ContactsRouter.post("/", ContactsController.createContact);
+ContactsRouter.get("/del/:id", ContactsController.deleteContact);
+ContactsRouter.post("/edit/:id", ContactsController.editContact);
 
 export default ContactsRouter;

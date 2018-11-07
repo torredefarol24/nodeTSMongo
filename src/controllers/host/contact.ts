@@ -3,13 +3,14 @@ import {Contact} from '../../models/Contact';
 
 async function getAllContacts(req : Request, res : Response){
   let contactFindOptions : any = {};
-  let contextData = {
+  let contextData : any = {
     msg : "No Contacts Found", 
     contacts : null
   }
   try {
     let contacts = await Contact.find(contactFindOptions);
     contextData.contacts = contacts;
+    contextData.msg = "Contacts From DB";
   } catch(error){
     contextData.msg = error;
   }
@@ -20,7 +21,7 @@ async function createNewContact(req: Request, res : Response){
   let reqFirstName : String = req.body.firstName.trim();
   let reqLastName : String = req.body.lastName.trim();
   let reqPhone : Number = req.body.phone;
-  let reqCreatedAt : Date = req.body.created_at.trim();
+  let reqCreatedAt : Date = new Date();
   let reqAddress : String = req.body.address.trim();
   let reqContactType : String = req.body.contactType.trim();
 
@@ -36,44 +37,28 @@ async function createNewContact(req: Request, res : Response){
   instanceContact.contactType = reqContactType;
   instanceContact.created_at = reqCreatedAt;
   
-  let jsonResp : any = {
-    msg : "Create new contact", 
-    method : `${req.method}`,
-  }
-
-  let httpStatus : number= 200;
-
   try {
-    let contact = await instanceContact.save()
-    jsonResp.data = contact;
-    jsonResp.success = true;
+    await instanceContact.save()
+    return res.redirect("/contacts")
   } catch(error){
-    jsonResp.success = false;
-    jsonResp.msg = error;
-    httpStatus = 500;
-  }
-  return res.status(httpStatus).json(jsonResp)
-    
+    return res.redirect("/contacts")
+  } 
 }
 
 async function getContactById(req: Request, res: Response){
   let contactId : String = req.params.id;
-  let jsonResp : any = {
-    msg : "Contact Found" ,
-    method : `${req.method}`,
+  let contextData : any = {
+    msg : "No Contact Found" ,
+    contact : null
   }
-  let httpStatus : number = 200;
-
   try {
     let contactFromDB = await Contact.findById(contactId)
-    jsonResp.data = contactFromDB
-    jsonResp.success = true;
+    contextData.data = contactFromDB
+    contextData.msg = "Contact Found"
   } catch (error){
-    jsonResp.msg = error;
-    jsonResp.success = false;
-    httpStatus = 500;
+    contextData.msg = error;
   }
-  return res.status(httpStatus).json(jsonResp);
+  return res.render("contacts/contact-details.pug", contextData);
 }
 
 async function updateContactById(req : Request, res :Response){
@@ -81,26 +66,13 @@ async function updateContactById(req : Request, res :Response){
   let contactFindOptions : any= {
     _id : contactId
   };
-
-  let jsonResp : any = {
-    msg : "Edit Contact",
-    method : `${req.method}`
-  };
-
-  let httpStatus : number= 200;
-
-  try{
-    let contactToEdit = await Contact.findOneAndUpdate(contactFindOptions, req.body);
-    let editedContact = await Contact.findById(contactFindOptions);
-    jsonResp.data = editedContact;
-    jsonResp.success = true;
+  try {
+    await Contact.findOneAndUpdate(contactFindOptions, req.body);
+    return res.redirect("/contacts")
   } catch(error){
-    httpStatus = 500;
-    jsonResp.success = false;
-    jsonResp.msg = error;
+    return res.redirect("/contacts")
   }
   
-  return res.status(httpStatus).json(jsonResp);
 }
 
 async function deleteContactById(req : Request, res : Response){
@@ -108,23 +80,16 @@ async function deleteContactById(req : Request, res : Response){
   let contactFindOptions : any = {
     _id : contactId
   };
-
-  let jsonResp : any = {
-    msg : "Delete Contact",
-    method : `${req.method}`
-  };
-  let httpStatus = 200;
-
   try {
     await Contact.remove(contactFindOptions)
-    jsonResp.success = true;
+    return res.redirect("/contacts");
   } catch(error){
-    jsonResp.success = false;
-    jsonResp.msg = error;
-    httpStatus = 500;
-  }
-  
-  return res.status(httpStatus).json(jsonResp);
+    return res.redirect("/contacts");
+  }  
+}
+
+async function renderAddContactForm(req : Request, res : Response ){
+  return res.render("contacts/add-contact.pug");
 }
 
 
@@ -133,7 +98,8 @@ const ControllerMethods : any = {
   createContact : createNewContact,
   getSingleContact : getContactById,
   editContact : updateContactById,
-  deleteContact : deleteContactById
+  deleteContact : deleteContactById,
+  showAddContactPage : renderAddContactForm
 }
 
 export default ControllerMethods;
