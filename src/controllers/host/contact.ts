@@ -93,7 +93,7 @@ async function renderAddContactForm(req : Request, res : Response ){
   return res.render("contacts/add-contact.pug");
 }
 
-async function processCSV(req: Request, res: Response){
+async function sendSingleContactCSV(req: Request, res: Response){
   let contactId : String = req.params.id ? req.params.id : "";
   let contextData : any= {
     data : null,
@@ -129,7 +129,37 @@ async function processCSV(req: Request, res: Response){
     contextData.msg = error;
     return res.render("contacts/contact-details.pug", contextData);
   }
+}
 
+async function sendAllContactsCSV(req: Request, res : Response){
+  let contactFindOptions : any = {};
+  let contextData : any = {
+    msg : "No Contacts Found", 
+    contacts : null
+  }
+  try {
+    let contacts = await Contact.find(contactFindOptions);
+    let contactFieldLabels = [
+      { label : "First Name", value : "firstName" },
+      { label : "Last Name", value : "lastName" },
+      { label : "Cell", value : "phone" },
+      { label : "Address", value : "address" },
+      { label : "Contact Type", value : "contactType" }
+    ]
+
+    let csvOptions = {
+      fields : contactFieldLabels
+    }
+
+    let csvData = JSON2CSV.parse(contacts, csvOptions)
+    let currentTime = new Date();
+    let fileName = `Contacts_${currentTime}.csv`
+    res.attachment(fileName);
+    return res.send(csvData);
+  } catch(error){
+    contextData.msg = error;
+  }
+  return res.render("contacts/contacts.pug", contextData)
 }
 
 const ControllerMethods : any = {
@@ -139,7 +169,8 @@ const ControllerMethods : any = {
   editContact : updateContactById,
   deleteContact : deleteContactById,
   showAddContactPage : renderAddContactForm,
-  sendCSV : processCSV
+  sendSingleCSV : sendSingleContactCSV,
+  sendAllCSV : sendAllContactsCSV
 }
 
 export default ControllerMethods;

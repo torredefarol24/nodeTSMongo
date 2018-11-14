@@ -2,8 +2,11 @@ extends ../layouts/layout.pug
 
 block content
   <div class='grid-x'>
-    <div class='cell medium-8'>
+    <div class='cell medium-4'>
       <h3 style="padding-left:10px; margin-bottom:20px">#{msg}</h3>
+    </div>
+    <div class='cell medium-4'>
+      <a href="/contacts/csv" type="button" class='info button ' style='margin-left:10px'>Export All Contacts</a>
     </div>
     <div class='cell medium-4 '>
       <a href="/contacts/add" type="button" class="success button float-right"> Add Contact </a>

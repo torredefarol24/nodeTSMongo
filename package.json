@@ -17,7 +17,7 @@
     "watch-ts": "tsc -w",
     "watch-js": "nodemon ./dist/server.js",
     "build": "tsc",
-    "dev": "ts-node ./lib/server.ts",
+    "dev": "ts-node ./src/server.ts",
     "start": "node ./dist/server.js",
     "production": "npm run build && npm start"
   }
