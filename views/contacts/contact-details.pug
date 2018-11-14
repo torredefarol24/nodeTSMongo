@@ -2,19 +2,21 @@ extends ../layouts/layout.pug
 
 block content
   <div class='medium-12'>
-  
     <div class='grid-x'>
-      <div class='cell medium-3'>
-        <h3 style="padding-left:10px; margin-bottom:20px">#{msg}</h3>
-      </div>
-      <div class='cell medium-1'>
-        <a type='button' href="/contacts/del/#{data.id}" class='button alert expanded'>Delete </a>
+      <div class='cell medium-4'>
+        <div class='grid-x'>
+          <div class='cell medium-9'>
+            <h3 style="padding-left:10px; margin-bottom:20px">#{msg}</h3>
+          </div>
+          <div class='cell medium-3'>
+            <a type='button' href="/contacts/csv/#{data.id}" class='button info expanded'>Export</a>
+          </div>
+        </div>
       </div>
       <div class='cell medium-8'>
-        <h3 class='text-center'>Edit Contact Info </h3>
+        <h3 class='medium-offset-3'>Edit Contact Info </h3>
       </div>
     </div>
-
   </div>
   <div class="grid-x">
     <div class="cell medium-4 large-4" style='padding-left: 10px'>
@@ -88,5 +90,12 @@ block content
           </div>
         </div>
       </form>
+
+      <div style='margin-top:48px'>  
+        <h3>Delete Contact</h3>
+        <div class='cell medium-12'>
+          <a type='button' href="/contacts/del/#{data.id}" class='button alert expanded'>Delete </a>
+        </div>
+      </div>
     </div>
   </div>

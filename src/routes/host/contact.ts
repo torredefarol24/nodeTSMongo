@@ -9,5 +9,6 @@ ContactsRouter.get("/:id", ContactsController.getSingleContact);
 ContactsRouter.post("/", ContactsController.createContact);
 ContactsRouter.get("/del/:id", ContactsController.deleteContact);
 ContactsRouter.post("/edit/:id", ContactsController.editContact);
+ContactsRouter.get("/csv/:id", ContactsController.sendCSV);
 
 export default ContactsRouter;

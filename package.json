@@ -9,12 +9,13 @@
     "@types/pug": "^2.0.4",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "json2csv": "^4.3.0",
     "mongoose": "^5.3.3",
     "pug": "^2.0.3"
   },
   "scripts": {
-    "watch-ts" : "tsc -w",
-    "watch-js" : "nodemon ./dist/server.js",
+    "watch-ts": "tsc -w",
+    "watch-js": "nodemon ./dist/server.js",
     "build": "tsc",
     "dev": "ts-node ./lib/server.ts",
     "start": "node ./dist/server.js",
