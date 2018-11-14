@@ -5,7 +5,7 @@
 - Database - MongoDB + Mongoose (ORM)
 - FrontendDesign - Zurb Foundation
 - CSV Libs - *JSON2CSV, CSV2JSON*
-
+- File Upload - *Multer* --**Awesome Library!**
 <h3> To Test This</h3>
 
 - Create DB Config
