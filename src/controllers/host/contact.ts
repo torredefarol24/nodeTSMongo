@@ -1,6 +1,9 @@
 import {Request, Response} from 'express';
 import {Contact} from '../../models/Contact';
 import * as JSON2CSV from 'json2csv';
+import * as CSV2JSON from 'csvtojson';
+import * as FS from 'fs'
+
 
 async function getAllContacts(req : Request, res : Response){
   let contactFindOptions : any = {};
@@ -17,6 +20,9 @@ async function getAllContacts(req : Request, res : Response){
   }
   return res.render("contacts/contacts.pug", contextData)
 }
+
+
+
 
 async function createNewContact(req: Request, res : Response){
   let reqFirstName : String = req.body.firstName.trim();
@@ -46,6 +52,8 @@ async function createNewContact(req: Request, res : Response){
   } 
 }
 
+
+
 async function getContactById(req: Request, res: Response){
   let contactId : String = req.params.id;
   let contextData : any = {
@@ -62,6 +70,8 @@ async function getContactById(req: Request, res: Response){
   return res.render("contacts/contact-details.pug", contextData);
 }
 
+
+
 async function updateContactById(req : Request, res :Response){
   let contactId : String = req.params.id;
   let contactFindOptions : any= {
@@ -76,6 +86,8 @@ async function updateContactById(req : Request, res :Response){
   
 }
 
+
+
 async function deleteContactById(req : Request, res : Response){
   let contactId : String = req.params.id;
   let contactFindOptions : any = {
@@ -89,9 +101,13 @@ async function deleteContactById(req : Request, res : Response){
   }  
 }
 
+
+
 async function renderAddContactForm(req : Request, res : Response ){
   return res.render("contacts/add-contact.pug");
 }
+
+
 
 async function sendSingleContactCSV(req: Request, res: Response){
   let contactId : String = req.params.id ? req.params.id : "";
@@ -131,6 +147,8 @@ async function sendSingleContactCSV(req: Request, res: Response){
   }
 }
 
+
+
 async function sendAllContactsCSV(req: Request, res : Response){
   let contactFindOptions : any = {};
   let contextData : any = {
@@ -162,6 +180,63 @@ async function sendAllContactsCSV(req: Request, res : Response){
   return res.render("contacts/contacts.pug", contextData)
 }
 
+
+
+async function previewContactFromCSV(req : Request, res : Response){
+  let fileInstance = req.file;
+  let filePath = fileInstance.path;
+  let jsonContactData = await CSV2JSON().fromFile(filePath);
+  
+  await FS.unlinkSync(filePath);
+
+  let contextData : any = {
+    msg : "CSV Parsing Failed"
+  }
+
+  if (jsonContactData.length > 1){
+    contextData.contacts = jsonContactData;
+    contextData.msg = "Import All Contacts from CSV"
+    return res.render('contacts/csv-contacts-preview.pug', contextData)  
+  } else {
+    contextData.csvContact = jsonContactData[0]
+    contextData.msg = "Import Contact Details"
+    return res.render('contacts/csv-single-preview.pug', contextData)  
+  }
+}
+
+
+
+
+async function createMultipleCSV(req: Request, res : Response){
+  let allContacts = JSON.parse(req.body.csvContacts);
+  let parsedContacts = allContacts.reduce(function(accumulator, currentVal){
+    currentVal.firstName = currentVal['First Name']
+    currentVal.lastName = currentVal['Last Name']
+    currentVal.address = currentVal['Address']
+    currentVal.contactType = currentVal['Contact Type']
+    currentVal.phone = currentVal['Cell']
+  
+    delete currentVal["First Name"]
+    delete currentVal['Last Name']
+    delete currentVal["Address"]
+    delete currentVal["Cell"]
+    delete currentVal["Contact Type"]
+    accumulator.push(currentVal)
+    return accumulator
+  }, []);
+
+  
+  try{
+    let result = await Contact.insertMany(parsedContacts);
+    return res.redirect("/contacts")
+  } catch(error){
+    console.error("Something went down ", error)
+  }
+  
+}
+
+
+
 const ControllerMethods : any = {
   showAllContacts : getAllContacts,
   createContact : createNewContact,
@@ -170,7 +245,9 @@ const ControllerMethods : any = {
   deleteContact : deleteContactById,
   showAddContactPage : renderAddContactForm,
   sendSingleCSV : sendSingleContactCSV,
-  sendAllCSV : sendAllContactsCSV
+  sendAllCSV : sendAllContactsCSV,
+  uploadCSV : previewContactFromCSV,
+  saveMultipleCSVContacts : createMultipleCSV
 }
 
 export default ControllerMethods;

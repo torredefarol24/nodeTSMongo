@@ -1,0 +1,37 @@
+extends ../layouts/layout.pug
+
+block content
+  <div class='grid-x'>
+
+    <div class='medium-8 medium-offset-2'>
+      <h3> #{msg} </h3>
+      <table class='hover' style="margin-top:36px;">
+        <thead>
+          <tr>
+            <th> First Name </th>
+            <th> Last Name </th>
+            <th> Cell </th>
+            <th> Address </th>
+            <th> Contact Type </th>
+          </tr>
+        </thead>
+        <tbody>
+          each contact in contacts
+            <tr>
+              <td> #{contact['First Name']} </td>
+              <td> #{contact['Last Name']} </td>
+              <td> #{contact['Cell']} </td>
+              <td> #{contact['Address']} </td>
+              <td> #{contact['Contact Type']} </td>
+            </tr>
+          
+          <form action="/contacts/multiple/csv" method="post">
+            <input type="hidden" value="#{JSON.stringify(contacts)}" name='csvContacts'/>
+            <button type="submit" class='button success '>Confirm</button>
+          </form>
+        </tbody>
+        
+      </table>
+
+    </div>
+  </div>

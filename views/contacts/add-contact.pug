@@ -1,11 +1,16 @@
 extends ../layouts/layout.pug
 
 block content
-  <div class='medium-12'>
-    <h3 class='text-center' style="padding-left:10px; margin-bottom:20px">Add Contact</h3>
-  </div>
   <div class='grid-x'>
-    <div class='cell medium-6 medium-offset-3'>
+    <div class='cell medium-3 medium-offset-1'>
+      <form action="/contacts/upload/csv" encType='multipart/form-data' method='post'>
+        <h3> Upload CSV </h3>
+        <input type='file' name='csvInput'/>
+        <button type='submit' class='success button'>Submit</button>
+      </form>
+    </div>
+    <div class='cell medium-4 medium-offset-1'>
+      <h3 style="padding-left:10px; margin-bottom:20px">Add Contact</h3>
       <form action="/contacts" method="post">
         <div class="grid-x">
           
@@ -53,5 +58,6 @@ block content
   
       </form>
     </div>
+    
   </div>
 
