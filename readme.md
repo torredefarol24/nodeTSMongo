@@ -6,7 +6,17 @@
 - FrontendDesign - Zurb Foundation
 - CSV Libs - *JSON2CSV, CSV2JSON*
 - File Upload - *Multer* --**Awesome Library!**
-<h3> To Test This</h3>
+
+
+## Docker
+- Build Container & Run App **Dev Mode**
+```sh
+$ cd nodeTSMongo
+$ docker-compose up
+```
+
+
+## Run Locally 
 
 - Create DB Config
 ```sh

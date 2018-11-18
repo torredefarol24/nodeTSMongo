@@ -13,8 +13,9 @@ class TSNodeApiApp{
   }
   
   public apiApp : express.Application;
-  public mongoURL : string = AppKeys.mongoDBURL
-
+  // public mongoURL : string = AppKeys.mongoDBURL
+  public mongoURL : string = AppKeys.mongoDBDockerURL
+  
   private bodyParserConfig(): void {
     this.apiApp.use(bodyParser.json());
     this.apiApp.use(bodyParser.urlencoded({extended : false}));

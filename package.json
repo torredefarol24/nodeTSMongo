@@ -14,7 +14,8 @@
     "json2csv": "^4.3.0",
     "mongoose": "^5.3.3",
     "multer": "^1.4.1",
-    "pug": "^2.0.3"
+    "pug": "^2.0.3",
+    "typescript": "^3.1.6"
   },
   "scripts": {
     "watch-ts": "tsc -w",
