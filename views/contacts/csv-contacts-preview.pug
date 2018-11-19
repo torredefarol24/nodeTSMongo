@@ -28,6 +28,7 @@ block content
           <form action="/contacts/multiple/csv" method="post">
             <input type="hidden" value="#{JSON.stringify(contacts)}" name='csvContacts'/>
             <button type="submit" class='button success '>Confirm</button>
+            <a class='button secondary' href="/contacts" style="margin-left:20px'">Cancel </a>
           </form>
         </tbody>
         

@@ -1,6 +1,6 @@
 const AppKeys = {
-  mongoDBURL : "mongodb://localhost/typescriptNode",
-  mongoDBDockerURL : "mongodb://mongo/typescriptNode"
+  mongoDBURL : "mongodb://localhost:27017/typescriptNode",
+  mongoDBDockerURL : "mongodb://mongo:27017/typescriptNode"
 }
 
 export default AppKeys

@@ -23,6 +23,6 @@
     "build": "tsc",
     "dev": "ts-node ./src/server.ts",
     "start": "node ./dist/server.js",
-    "production": "npm run build && npm start"
+    "production": "tsc && yarn start"
   }
 }
