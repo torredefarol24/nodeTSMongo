@@ -1,101 +1,117 @@
 extends ../layouts/layout.pug
 
 block content
-  <div class='medium-12'>
-    <div class='grid-x'>
-      <div class='cell medium-4'>
-        <div class='grid-x'>
-          <div class='cell medium-9'>
-            <h3 style="padding-left:10px; margin-bottom:20px">#{msg}</h3>
+  if (data)
+    <div class='medium-12'>
+      <div class='grid-x'>
+        <div class='cell medium-4'>
+          <div class='grid-x'>
+            <div class='cell medium-9'>
+              <h3 style="padding-left:10px; margin-bottom:20px">#{msg}</h3>
+            </div>
+            <div class='cell medium-3'>
+              <a type='button' href="/contacts/csv/#{data.id}" class='button info expanded'>Export</a>
+            </div>
           </div>
-          <div class='cell medium-3'>
-            <a type='button' href="/contacts/csv/#{data.id}" class='button info expanded'>Export</a>
-          </div>
         </div>
-      </div>
-      <div class='cell medium-8'>
-        <h3 class='medium-offset-3'>Edit Contact Info </h3>
-      </div>
-    </div>
-  </div>
-  <div class="grid-x">
-    <div class="cell medium-4 large-4" style='padding-left: 10px'>
-      <div class="card">
-        <div class="card-divider">
-          <h3>#{data.lastName}, #{data.firstName}</h3>
-        </div>
-        <div class="card-section">
-          <h4>#{data.phone}</h4>
-          <p>#{data.address}</p>
-        </div>
-        <div class="card-divider">
-          <h4> Details </h4>
-        </div>
-        <div class='card-section'>
-          <p> <strong> Contact Since </strong> </p>
-          <p> #{data.created_at}</p>
-          <p> <strong> Contact Type </strong> </p>
-          <p> #{data.contactType} </p>
+        <div class='cell medium-8'>
+          <h3 class='medium-offset-3'>Edit Contact Info </h3>
         </div>
       </div>
     </div>
-    <div class='cell medium-4 medium-offset-2'>
-      <form action="/contacts/edit/#{data.id}" method="post">
-        <div class='grid-x'>
-          <div class='cell medium-6'>
-            <label>First Name
-              <input type='text' name='firstName' value="#{data.firstName}" placeholder='John' />
-            </label>
+    <div class="grid-x">
+      <div class="cell medium-4 large-4" style='padding-left: 10px'>
+        <div class="card">
+          <div class="card-divider">
+            <h3>#{data.lastName}, #{data.firstName}</h3>
           </div>
-          <div class='cell medium-6'>
-            <label>Last Name
-              <input type='text' name='lastName' value="#{data.lastName}" placeholder='Doe' />
-            </label>
+          <div class="card-section">
+            <h4>#{data.phone}</h4>
+            <p>#{data.address}</p>
           </div>
-          <div class='cell medium-12'>
-            <label> Address
-              <input type='text' name='address' value='#{data.address}' placeholder='115, Dummy Street, FolkTown' />
-            </label>
+          <div class="card-divider">
+            <h4> Details </h4>
           </div>
-          <div class='cell medium-6'>
-            <label> Cell
-              <input type='text' name='phone' value='#{data.phone}' placeholder="55142147" />
-            </label>
-          </div>
-          <div class='cell medium-6'>
-            <label> Type
-              <select name='contactType'>
-                if (data.contactType == "Acquintance") 
-                  <option value='Acquitance' selected>Acquintance</option>
-                else 
-                  <option value='Acquitance'>Acquintance</option>
-                
-                if (data.contactType =='Friend')
-                  <option value='Friend' selected>Friend</option>
-                else 
-                  <option value='Friend'>Friend</option>
-                
-                if (data.contactType =='Work')
-                  <option value='Work' selected>Work </option>
-                else 
-                  <option value='Work'>Work </option>  
-              </select>
-            </label>
-          </div>
-          <div class='cell medium-6'>
-            <button type='submit' class='button success expanded'>Submit</button>
-          </div>
-          <div class='cell medium-6'>
-            <button type='reset' class='button secondary expanded'>Reset</button>
+          <div class='card-section'>
+            <p> <strong> Contact Since </strong> </p>
+            <p> #{data.created_at}</p>
+            <p> <strong> Contact Type </strong> </p>
+            <p> #{data.contactType} </p>
           </div>
         </div>
-      </form>
+      </div>
+      <div class='cell medium-4 medium-offset-2'>
+        <form action="/contacts/edit/#{data.id}" method="post">
+          <div class='grid-x'>
+            <div class='cell medium-6'>
+              <label>First Name
+                <input type='text' name='firstName' value="#{data.firstName}" placeholder='John' />
+              </label>
+            </div>
+            <div class='cell medium-6'>
+              <label>Last Name
+                <input type='text' name='lastName' value="#{data.lastName}" placeholder='Doe' />
+              </label>
+            </div>
+            <div class='cell medium-12'>
+              <label> Address
+                <input type='text' name='address' value='#{data.address}' placeholder='115, Dummy Street, FolkTown' />
+              </label>
+            </div>
+            <div class='cell medium-6'>
+              <label> Cell
+                <input type='text' name='phone' value='#{data.phone}' placeholder="55142147" />
+              </label>
+            </div>
+            <div class='cell medium-6'>
+              <label> Type
+                <select name='contactType'>
+                  if (data.contactType == "Acquintance") 
+                    <option value='Acquitance' selected>Acquintance</option>
+                  else 
+                    <option value='Acquitance'>Acquintance</option>
+                  
+                  if (data.contactType =='Friend')
+                    <option value='Friend' selected>Friend</option>
+                  else 
+                    <option value='Friend'>Friend</option>
+                  
+                  if (data.contactType =='Work')
+                    <option value='Work' selected>Work </option>
+                  else 
+                    <option value='Work'>Work </option>  
+                </select>
+              </label>
+            </div>
+            <div class='cell medium-6'>
+              <button type='submit' class='button success expanded'>Submit</button>
+            </div>
+            <div class='cell medium-6'>
+              <button type='reset' class='button secondary expanded'>Reset</button>
+            </div>
+          </div>
+        </form>
 
-      <div style='margin-top:48px'>  
-        <h3>Delete Contact</h3>
-        <div class='cell medium-12'>
-          <a type='button' href="/contacts/del/#{data.id}" class='button alert expanded'>Delete </a>
+        <div style='margin-top:48px'>  
+          <h3>Delete Contact</h3>
+          <div class='cell medium-12'>
+            <a type='button' href="/contacts/del/#{data.id}" class='button alert expanded'>Delete </a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  else 
+    <div class='medium-12'>
+      <div class='grid-x'>
+        <div class='cell medium-6'>
+          <div class='grid-x'>
+            <div class='cell medium-12'>
+              <h3 style="padding-left:10px; margin-bottom:20px">#{msg}</h3>
+            </div>
+          </div>
+        </div>
+        <div class='cell medium-12'>
+          <p style="padding-left:10px; margin-bottom:20px; margin-top:40px"> Simply Said, <br/> You gave the <strong>wrong ID</strong> genius</p>
+        </div>
+      </div>
+    </div>

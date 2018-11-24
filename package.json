@@ -21,6 +21,7 @@
     "watch-ts": "tsc -w",
     "watch-js": "nodemon ./dist/server.js",
     "build": "tsc",
+    "start-app" : "yarn watch-ts && yarn watch-js",
     "dev": "ts-node ./src/server.ts",
     "start": "node ./dist/server.js",
     "production": "tsc && yarn start"

@@ -7,13 +7,13 @@ const keys_1 = require("./config/keys");
 const mongoose = require("mongoose");
 class TSNodeApiApp {
     constructor() {
-        this.mongoURL = keys_1.default.mongoDBURL;
+        // public mongoURL : string = AppKeys.mongoDBURL
+        this.mongoURL = keys_1.default.mongoDBDockerURL;
         this.apiApp = express();
         this.bodyParserConfig();
         this.routeConfig();
         this.mongoDBSetup();
     }
-    // public mongoURL : string = AppKeys.mongoDBDockerURL
     bodyParserConfig() {
         this.apiApp.use(bodyParser.json());
         this.apiApp.use(bodyParser.urlencoded({ extended: false }));
