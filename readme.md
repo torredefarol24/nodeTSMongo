@@ -9,7 +9,7 @@
 
 
 ## Docker
-- Build Container & Run App **Dev Mode**
+- Run App from Image
 ```sh
 $ cd nodeTSMongo
 $ docker-compose up
@@ -31,6 +31,18 @@ const AppKeys = {
 }
 
 export default AppKeys
+```
+
+- Update DBURL in hostApp.ts
+```sh
+$ cd nodeTsMongo/src/
+
+# Open hostApp.ts in your favorite editor
+
+# Change Line 19
+public mongoURL : string = AppKeys.mongoDBDockerURL
+to 
+public mongoURL : string = AppKeys.mongoDBURL
 ```
 
 - Install Package Dependencies
