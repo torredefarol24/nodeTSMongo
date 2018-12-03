@@ -12,6 +12,7 @@
 - Run App from Image
 ```sh
 $ cd nodeTSMongo
+$ docker pull burningraven06/node-ts-mongo
 $ docker-compose up
 ```
 
