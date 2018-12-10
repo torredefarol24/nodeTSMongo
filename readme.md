@@ -8,8 +8,8 @@
 - File Upload - *Multer* --**Awesome Library!**
 
 
-## Docker
-- Run App from Image
+## Run Docker Container
+
 ```sh
 $ cd nodeTSMongo
 $ docker pull burningraven06/node-ts-mongo
@@ -17,7 +17,7 @@ $ docker-compose up
 ```
 
 
-## Run Locally 
+## Run App Locally 
 
 - Create DB Config
 ```sh
@@ -25,25 +25,25 @@ $ cd nodeTSMongo
 $ touch src/config/keys.ts
 ```
 
-- Update keys.ts
+- Update **src/config/keys.ts**
 ```sh
 const AppKeys = {
-  mongoDBURL : <YOUR_MONGODB_URL>
+  mongoDBURL : <YOUR_MONGODB_URL>,
+  mongoDBDockerURL : ""
 }
 
 export default AppKeys
 ```
 
-- Update DBURL in hostApp.ts
+- Update **src/hostApp.ts**
 ```sh
-$ cd nodeTsMongo/src/
-
-# Open hostApp.ts in your favorite editor
+$ cd nodeTsMongo/src/   #Open hostApp.ts
 
 # Change Line 19
-    public mongoURL : string = AppKeys.mongoDBDockerURL
+public mongoURL : string = AppKeys.mongoDBDockerURL
+
 # to 
-    public mongoURL : string = AppKeys.mongoDBURL
+public mongoURL : string = AppKeys.mongoDBURL
 ```
 
 - Install Package Dependencies
