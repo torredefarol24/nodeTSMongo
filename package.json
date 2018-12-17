@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "main": "server.js",
   "license": "MIT",
+  "private": true,
+  "author": "Toufiq (https://twitter.com/burningraven06)",
+  "description" : "Using Typescript to create A Node/Express Application with MongoDB Connection, CSV Import/Export & Docker Container",
+  "keywords" : ["nodejs","typescript","tsc","mongodb","mongoose","js","javascript","multer","file-upload","csv","json2csv","csv2json","csv-export","csv-importer","docker","docker-image","docker-compose"],
   "dependencies": {
     "@types/express": "^4.16.0",
     "@types/mongoose": "^5.2.19",
