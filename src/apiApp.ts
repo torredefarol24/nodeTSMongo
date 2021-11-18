@@ -2,7 +2,7 @@ import express from 'express';
 import * as bodyParser from 'body-parser';
 import MongoPriceRouter from './routes/api/price';
 import AppKeys from './config/keys';
-import * as mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import {MirrorPricesFeed} from './middleware/mirror';
 
 class TSNodeApiApp{

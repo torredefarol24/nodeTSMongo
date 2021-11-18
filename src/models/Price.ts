@@ -1,4 +1,4 @@
-import * as mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import PriceSchema from '../schemas/price';
 import PriceModelInterface from '../interface/price';
 

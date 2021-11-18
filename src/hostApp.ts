@@ -3,7 +3,7 @@ import * as bodyParser from 'body-parser';
 import IndexRouter from './routes/host';
 import PriceRouter from './routes/host/price';
 import AppKeys from './config/keys';
-import * as mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
 class TSNodeHostApp{
   constructor(){
