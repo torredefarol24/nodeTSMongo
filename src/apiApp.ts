@@ -3,8 +3,11 @@ import * as bodyParser from 'body-parser';
 import MongoPriceRouter from './routes/api/price';
 import AppKeys from './config/keys';
 import * as mongoose from 'mongoose';
+import {MirrorPricesFeed} from './middleware/mirror';
 
 class TSNodeApiApp{
+  private mirrorFeed: MirrorPricesFeed;
+
   constructor(){
     this.apiApp = express();
     this.bodyParserConfig();
@@ -39,13 +42,13 @@ class TSNodeApiApp{
     )
   }
 
-  private terraPollSetup(): void {
-    const id = setInterval(() => {
-
-    }, 2000)
+  private async terraPollSetup() {
+    this.mirrorFeed = new MirrorPricesFeed();
+    const id = setInterval(async () => {
+      await this.mirrorFeed.fetchFromMirrorAndUpdateDB();
+     }, 60000)
     clearInterval(id)
   }
-
 }
 
 export default new TSNodeApiApp().apiApp;

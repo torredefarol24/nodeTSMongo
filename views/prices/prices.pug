@@ -9,20 +9,25 @@ block content
       <a href="/prices/csv" type="button" class='info button ' style='margin-left:10px'>Export All Prices</a>
     </div>
   </div>
-  <div class="grid-x">
-    each value in prices
-      <div class="cell medium-4 large-4" style='padding-left: 10px'>
-        <div class="card">
-          <a href="/prices/#{value.mAsset}" style='color: black'>
-            <div class="card-divider">
-              <h3>Mirror #{value.priceUST} UST, #{value.oraclePriceUST}</h3>
-              <h3>Premium: #{value.premium}</h3>
-            </div>
-          </a>
-          <div class="card-section">
-            <h4>#{value.createdAt}</h4>
-          </div>
-        </div>
-      </div>
-  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Asset</th>
+        <th>Terraswap Price, UST</th>
+        <th>Oracle ("Real") Price, UST</th>
+        <th>Premium</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody>
+      each value in prices
+        <tr>
+          <td>#{value.mAsset}</td>
+          <td>#{value.priceUST}</td>
+          <td>#{value.oraclePriceUST}</td>
+          <td>#{value.premium}</td>
+          <td>#{value.created_at}</td>
+        </tr>
+    </tbody>
+  </table>
 
