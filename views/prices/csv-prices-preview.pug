@@ -8,30 +8,30 @@ block content
       <table class='hover' style="margin-top:36px;">
         <thead>
           <tr>
-            <th> First Name </th>
-            <th> Last Name </th>
-            <th> Cell </th>
-            <th> Address </th>
-            <th> Contact Type </th>
+            <th> mAsset </th>
+            <th> priceUST </th>
+            <th> oraclePriceUST </th>
+            <th> premium </th>
+            <th> created_at </th>
           </tr>
         </thead>
         <tbody>
-          each contact in contacts
+          each price in prices
             <tr>
-              <td> #{contact['First Name']} </td>
-              <td> #{contact['Last Name']} </td>
-              <td> #{contact['Cell']} </td>
-              <td> #{contact['Address']} </td>
-              <td> #{contact['Contact Type']} </td>
+              <td> #{price['mAsset']} </td>
+              <td> #{price['priceUST']} </td>
+              <td> #{price['oraclePriceUST']} </td>
+              <td> #{price['premium']} </td>
+              <td> #{price['created_at']} </td>
             </tr>
-          
+
           <form action="/contacts/multiple/csv" method="post">
-            <input type="hidden" value="#{JSON.stringify(contacts)}" name='csvContacts'/>
+            <input type="hidden" value="#{JSON.stringify(prices)}" name='csvContacts'/>
             <button type="submit" class='button success '>Confirm</button>
             <a class='button secondary' href="/contacts" style="margin-left:20px'">Cancel </a>
           </form>
         </tbody>
-        
+
       </table>
 
     </div>

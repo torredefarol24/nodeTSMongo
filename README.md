@@ -1,5 +1,8 @@
 ## TypeScript with Node & MongoDB
 
+     const premium = minus(div(pair, oracle), 1)
+
+
 - Backend - Express (written in **TypeScript**)
 - Frontend - **Pug** Templating Engine
 - Database - MongoDB + Mongoose (ORM)
