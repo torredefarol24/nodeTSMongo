@@ -1,4 +1,4 @@
-import * as express from 'express';
+import express from 'express';
 import * as bodyParser from 'body-parser';
 import MongoPriceRouter from './routes/api/price';
 import AppKeys from './config/keys';
@@ -13,6 +13,7 @@ class TSNodeApiApp{
     this.bodyParserConfig();
     this.routeConfig();
     this.mongoDBSetup();
+    this.mirrorFeed = new MirrorPricesFeed();
     this.terraPollSetup();
   }
 
@@ -31,7 +32,7 @@ class TSNodeApiApp{
   }
 
   private mongoDBSetup() : void{
-    mongoose.connect(this.mongoURL, {useNewUrlParser: true},
+    mongoose.connect(this.mongoURL,
       (err) => {
         if (err){
           console.error("DB Error" , err);
@@ -43,7 +44,6 @@ class TSNodeApiApp{
   }
 
   private async terraPollSetup() {
-    this.mirrorFeed = new MirrorPricesFeed();
     const id = setInterval(async () => {
       await this.mirrorFeed.fetchFromMirrorAndUpdateDB();
      }, 60000)

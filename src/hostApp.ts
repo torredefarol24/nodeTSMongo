@@ -1,4 +1,4 @@
-import * as express from 'express';
+import express from 'express';
 import * as bodyParser from 'body-parser';
 import IndexRouter from './routes/host';
 import PriceRouter from './routes/host/price';
@@ -29,7 +29,7 @@ class TSNodeHostApp{
   }
 
   private mongoDBSetup() : void{
-    mongoose.connect(this.mongoURL, {useNewUrlParser: true},
+    mongoose.connect(this.mongoURL,
       (err) => {
         if (err){
           console.error("DB Error" , err);

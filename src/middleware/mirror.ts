@@ -17,7 +17,7 @@ export class MirrorPricesFeed {
             priceLine.mAsset = tokenInfo.symbol;
             const pair = await asset.pair.getPool();
             priceLine.priceUST = Number(pair.assets[0].amount)/Number(pair.assets[1].amount);
-            priceLine.oraclePriceUST = Number((await this.mirror.oracle.getPrice(asset.token.contractAddress, 'uusd')).rate);
+            priceLine.oraclePriceUST = Number((await this.mirror.oracle.getPrice(asset.token.contractAddress as string, 'uusd')).rate);
             priceLine.premium = 1.0 - Number(priceLine.oraclePriceUST) / Number(priceLine.priceUST);
             await priceLine.save();
         }
