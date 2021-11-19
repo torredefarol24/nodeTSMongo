@@ -1,12 +1,13 @@
-FROM node:10.13.0
+FROM node:16
 
-WORKDIR /usr/source/app
+WORKDIR /opt/app
 
 COPY package.json ./
 
 RUN yarn install
 
-COPY . . 
+COPY tsconfig.json ./
+COPY ./src ./
 
 EXPOSE 3000
 
