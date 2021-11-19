@@ -1,7 +1,7 @@
 import {Request, Response} from 'express';
 import {Price} from '../../models/Price';
+import moment from 'moment';
 import * as JSON2CSV from 'json2csv';
-import * as FS from 'fs'
 
 async function getAllPrices(req : Request, res : Response){
   let priceFindOptions : any = {};
@@ -105,7 +105,7 @@ async function sendAllPricesCSV(req: Request, res : Response){
     }
 
     let csvData = JSON2CSV.parse(prices, csvOptions)
-    let currentTime = new Date();
+    const currentTime = moment().format('YYYYMMDDhhmmss');
     let fileName = `Prices_${currentTime}.csv`
     res.attachment(fileName);
     return res.send(csvData);
