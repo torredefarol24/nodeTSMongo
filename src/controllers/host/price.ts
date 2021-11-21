@@ -10,7 +10,7 @@ async function getAllPrices(req: Request, res: Response) {
         prices: null
     }
     try {
-        contextData.prices = await Price.find(priceFindOptions);
+        contextData.prices = await Price.find(priceFindOptions).sort({ _id: -1 }).limit(100);
         contextData.msg = 'Collected Price Feed From DB';
     } catch (error) {
         contextData.msg = error;
