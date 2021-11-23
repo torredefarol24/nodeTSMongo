@@ -2,3 +2,27 @@ extends ../layouts/layout.pug
 
 block content
   <h3>#{message}</h3>
+  <h5>Drag to zoom</h5>
+  <div id="dragZoom"></div>
+  script(type='text/javascript').
+    var chart = bb.generate({
+      data: {
+        x: "x",
+        xFormat: "%Y-%m-%d %H:%M",
+         columns: !{dataColumns},
+        type: "line",
+      },
+      axis: {
+        x: {
+          type: "timeseries",
+          tick: {
+              format: "%Y-%m-%d %H:%M"
+          }
+        }
+      },
+      zoom: {
+        enabled: true,
+        type: "drag"
+      },
+      bindto: "#dragZoom"
+    });

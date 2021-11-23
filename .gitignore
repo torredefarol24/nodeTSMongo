@@ -121,3 +121,4 @@ dist
 # System-specific
 .DS_Store
 /yarn.lock
+!/.env

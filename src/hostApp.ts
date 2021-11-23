@@ -42,6 +42,7 @@ class TSNodeHostApp{
 
   private staticFilesSetup(){
     this.hostApp.use(express.static('public'));
+    this.hostApp.locals.basedir =  '/public';
   }
 
 }
