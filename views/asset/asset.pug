@@ -1,0 +1,84 @@
+extends ../layouts/layout.pug
+
+block content
+  <h3>#{message}</h3>
+  <script src="https://cdn.jsdelivr.net/npm/d3-array@3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3-color@3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3-format@3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3-interpolate@3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3-time@3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3-time-format@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3-scale@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3-axis@3"></script>
+
+  <script src="/js/timechart.min.js"></script>
+
+  div#chart(style={
+      "width": "100%",
+      "height": "640px",
+      "max-height": "90vh"
+      })
+
+  script(type='text/javascript').
+    main();
+
+    function main() {
+        const el = document.getElementById('chart');
+        const dataSin = [];
+        const dataCos = [];
+        const chart = new TimeChart(el, {
+            // debugWebGL: true,
+            // forceWebGL1: true,
+            baseTime: !{baseTime},
+            series: [{
+                    name: !{assetName},
+                    data: !{dataColumns},
+                    lineWidth: 2,
+                    color: 'red'
+                    },
+                    {
+                        name: 'Mean',
+                        data: !{dataColumnsMean},
+                        lineWidth: 2,
+                        color: 'blue',
+                    },
+                    {
+                        name: '1 SD from mean',
+                        data: !{dataColumnsExtremum1},
+                        lineWidth: 5,
+                        visible: false,
+                        color: 'yellowgreen',
+                    },
+                    {
+                        name: '2 SD from mean',
+                        data: !{dataColumnsExtremum2},
+                        lineWidth: 5,
+                        visible: false,
+                        color: 'orange',
+                    },
+                    {
+                        name: '3 SD from mean',
+                        data: !{dataColumnsExtremum3},
+                        lineWidth: 5,
+                        visible: false,
+                        color: 'gold',
+                    },
+                    ],
+            xRange: "auto",
+            // realTime: true,
+            zoom: {
+                x: {
+                    autoRange: true,
+                    minDomainExtent: 50,
+                },
+                y: {
+                    autoRange: true,
+                    minDomainExtent: 1,
+                }
+            },
+            tooltip: true,
+            tooltipXLabel: "Time, ms"
+        });
+        let x = !{baseTime};
+    }

@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import PricesController from '../../controllers/host/price'
+import PricesController from '../../controllers/host/export'
 
 let PriceRouter: Router = Router();
 

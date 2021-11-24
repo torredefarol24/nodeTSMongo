@@ -1,33 +1,43 @@
 extends ../layouts/layout.pug
-
 block content
-  <div class='grid-x'>
-    <div class='cell medium-4'>
-      <h3 style="padding-left:10px; margin-bottom:20px">#{msg}</h3>
+  <div class=class="container-fluid">
+    <div>
+      <h3>#{msg}</h3>
+      <p>
+        <a href="/prices/csv" type="button" class="btn btn-primary" role="button">Export All Prices</a>
+      </p>
     </div>
-    <div class='cell medium-4'>
-      <a href="/prices/csv" type="button" class='info button ' style='margin-left:10px'>Export All Prices</a>
-    </div>
-  </div>
-  <table>
-    <thead>
-      <tr>
-        <th>Asset</th>
-        <th>Terraswap Price, UST</th>
-        <th>Oracle ("Real") Price, UST</th>
-        <th>Premium</th>
-        <th>Timestamp</th>
-      </tr>
-    </thead>
-    <tbody>
-      each value in prices
+  <div id="assets">
+    <input class="search" placeholder="Search asset" />
+    <button class="sort btn btn-secondary btn-sm" data-sort="asset">Sort by asset</button>
+    <table class="table">
+      <thead>
         <tr>
-          <td>#{value.mAsset}</td>
-          <td>#{value.priceUST}</td>
-          <td>#{value.oraclePriceUST}</td>
-          <td>#{value.premium}</td>
-          <td>#{value.created_at}</td>
+          <th scope="col">Asset</th>
+          <th scope="col">Terraswap Price, UST</th>
+          <th scope="col">Oracle ("Real") Price, UST</th>
+          <th scope="col">Premium</th>
+          <th scope="col">Timestamp</th>
         </tr>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+      <tbody class="list">
+        each value in prices
+          <tr>
+            <td class="asset">#{value.mAsset}</td>
+            <td>#{value.priceUST}</td>
+            <td>#{value.oraclePriceUST}</td>
+            <td class="premium">#{value.premium}</td>
+            <td>#{value.created_at}</td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+  script.
+    var options = {
+      valueNames: [ 'asset', 'premium' ]
+    };
+    var assetList = new List('assets', options);
 

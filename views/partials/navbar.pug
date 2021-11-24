@@ -1,11 +1,46 @@
-<div class="top-bar">
-  <div class="top-bar-left">
-    <ul class="menu">
-      <li class="menu-text">Mirror Protocol Price Feed</li>
-      <li>
-        <a href="/">Dashboard</a>
-      </li>
-      <li><a href="/prices">Export</a></li>
-    </ul>
-  </div>
-</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+   <div class="container-fluid">
+     <a class="navbar-brand" href="#">Mirror Protocol Price Feed</a>
+     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+       <span class="navbar-toggler-icon"></span>
+     </button>
+     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+         <li class="nav-item">
+           <a class="nav-link #{activePageDashboard}" aria-current="page" href="/">Dashboard</a>
+         </li>
+         <li class="nav-item dropdown">
+           <a class="nav-link dropdown-toggle #{activePageAsset}" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Assets</a>
+           <ul class="dropdown-menu" aria-labelledby="Dashboard">
+            each asset in assets
+                <li><a class="dropdown-item" href="/asset/#{asset}">#{asset}</a></li>
+           </ul>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link #{activePageExport}" href="/prices">Export to Excel</a>
+         </li>
+       </ul>
+       <span class="d-flex">
+       if activePageExport
+           <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-html="true"
+           | title="The most recent 10 hundred records are on the screen only. Export downloads the whole database."><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-question-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247zm2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z"/></svg></button>
+       else if activePageAsset
+        <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-html="true"
+        | title="Click on the legend item to hide/show a variable<br><br><b>UI<b><br><b>Touch screen:</b><ul><li>1 finger to pan<li>2+ fingers to pan and zoom</ul>
+        | <b>Mouse:</b><ul>
+        | <li>Left button drag to pan
+        | <li>Wheel scroll to translate X axis
+        | <li>Alt + wheel scroll to translate Y axis
+        | <li>Ctrl + wheel scroll to zoom X axis
+        | <li>Ctrl + Alt + wheel scroll to zoom Y axis
+        | <li>Hold Shift key to speed up translate or zoom 5 times
+        | </ul><b>Trackpad:</b><ul>
+        | <li>Pan X or Y direction to translate X axis
+        | <li>Alt + Pan X/Y direction to translate X/Y axis
+        | <li>Pinch to zoom X axis
+        | <li>Alt + pinch to zoom Y axis
+        | <li>Hold Shift key to speed up translate or zoom 5 times"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-question-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247zm2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z"/></svg></button>
+       </span>
+     </div>
+   </div>
+</nav>

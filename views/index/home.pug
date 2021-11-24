@@ -1,28 +1,42 @@
 extends ../layouts/layout.pug
-
 block content
-  <h3>#{message}</h3>
-  <h5>Drag to zoom</h5>
-  <div id="dragZoom"></div>
-  script(type='text/javascript').
-    var chart = bb.generate({
-      data: {
-        x: "x",
-        xFormat: "%Y-%m-%d %H:%M",
-         columns: !{dataColumns},
-        type: "line",
-      },
-      axis: {
-        x: {
-          type: "timeseries",
-          tick: {
-              format: "%Y-%m-%d %H:%M"
-          }
-        }
-      },
-      zoom: {
-        enabled: true,
-        type: "drag"
-      },
-      bindto: "#dragZoom"
-    });
+    <div class=class="container-fluid">
+    <div>
+    <h3>#{msg}</h3>
+    </div>
+    <div id="assets">
+    <input class="search" placeholder="Search asset" />
+    <button class="sort btn btn-secondary btn-sm" data-sort="asset">Sort by asset</button>
+    <table class="table">
+    <thead>
+    <tr>
+    <th scope="col">Asset</th>
+    <th scope="col">Current Terraswap Price, UST</th>
+    <th scope="col">Current Oracle ("Real") Price, UST</th>
+    <th scope="col">Current Premium</th>
+    <th scope="col">Mean Premium</th>
+    <th scope="col">Standard Deviation</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tbody class="list">
+    each value in prices
+        <tr>
+        <td class="asset">#{value.mAsset}</td>
+        <td>#{value.priceUST}</td>
+        <td>#{value.oraclePriceUST}</td>
+        <td class="premium">#{value.premium}</td>
+        <td class="meanpremium">#{value.meanPremium}</td>
+        <td>#{value.sd}</td>
+        </tr>
+    </tbody>
+    </table>
+    </div>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+    script.
+        var options = {
+            valueNames: [ 'asset', 'premium' ]
+        };
+        var assetList = new List('assets', options);
+

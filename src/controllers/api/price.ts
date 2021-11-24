@@ -11,8 +11,7 @@ async function getAllPrices(req : Request, res : Response){
   let httpStatus = 200;
 
   try {
-    let prices = await Price.find(priceFindOptions);
-    jsonResp.data = prices;
+    jsonResp.data = await Price.find(priceFindOptions);
     jsonResp.success = true;
   } catch(error){
     jsonResp.msg = error;
@@ -71,8 +70,7 @@ async function getPriceById(req: Request, res: Response){
   let httpStatus : number = 200;
 
   try {
-    let priceFromDB = await Price.findById(priceId)
-    jsonResp.data = priceFromDB
+    jsonResp.data = await Price.findById(priceId)
     jsonResp.success = true;
   } catch (error){
     jsonResp.msg = error;

@@ -54,7 +54,7 @@ class TSNodeApiApp{
   private async terraPollSetup() {
     const id = setInterval(async () => {
       await this.mirrorFeed.fetchFromMirrorAndUpdateDB();
-     }, 2000);
+     }, 60000);
   }
 }
 

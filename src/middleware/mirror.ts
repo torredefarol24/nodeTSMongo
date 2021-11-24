@@ -46,7 +46,7 @@ export class MirrorPricesFeed {
             ubLunaSwapPrice.mAsset = this.uLunabLunaSymbol;
             ubLunaSwapPrice.priceUST = 1;
             ubLunaSwapPrice.oraclePriceUST = 1;
-            ubLunaSwapPrice.premium = Number(uLunabLunaSwapRate.return_amount) / 1000000.0;
+            ubLunaSwapPrice.premium = 1 - Number(uLunabLunaSwapRate.return_amount) / 1000000.0;
             await ubLunaSwapPrice.save();
 
             for (const [symbol] of Object.entries(this.mirror.assets)) {
@@ -67,3 +67,6 @@ export class MirrorPricesFeed {
         }
     }
 }
+
+export const mirrorObject = new MirrorPricesFeed();
+
